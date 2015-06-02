@@ -21,15 +21,8 @@ namespace gtk05
 		public static void testTasks()
 		{
 			ToDoList todo = new ToDoList ();
-			todo.AddTask ("binary studio test");
-			todo.tasks[0].AddSubTask("установить нужное ПО");
-			todo.tasks[0].AddSubTask("Поискать контакты менторов");
-			todo.tasks[0].AddSubTask("поискать сообщества по .нет");
-
-			todo.AddTask ("выучить английский");
-			Console.Write (todo.tasks[0]);
-			Console.Write (todo);
-
+			todo.addTestData ();
+			todo.printToDo();
 		}
 
 	}
