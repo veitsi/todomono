@@ -13,24 +13,22 @@ namespace gtk05
 			win.Show ();
 			Console.Write("программа запущена \n");
 			testTasks();
-			Application.Run ();
+			//Application.Run ();
 
 
 		}
 
 		public static void testTasks()
 		{
-			System.Collections.Generic.List<Task> todo = new System.Collections.Generic.List<Task>();
-			todo.Add (new Task ("binary studio test"));
-			todo [0].AddSubTask ("установить нужное ПО");
-			todo [0].AddSubTask ("Поискать контакты менторов");
-			todo [0].AddSubTask ("поискать сообщества по .нет");
+			ToDoList todo = new ToDoList ();
+			todo.AddTask ("binary studio test");
+			todo.tasks[0].AddSubTask("установить нужное ПО");
+			todo.tasks[0].AddSubTask("Поискать контакты менторов");
+			todo.tasks[0].AddSubTask("поискать сообщества по .нет");
 
-			todo.Add (new Task ("выучить английский"));
-			Console.Write (todo[0]);
+			todo.AddTask ("выучить английский");
+			Console.Write (todo.tasks[0]);
 			Console.Write (todo);
-
-
 
 		}
 
