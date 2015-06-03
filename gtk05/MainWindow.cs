@@ -13,4 +13,9 @@ public partial class MainWindow: Gtk.Window
 		Application.Quit ();
 		a.RetVal = true;
 	}
+
+	protected void OnButton2Clicked (object sender, EventArgs e)
+	{
+		textview.Buffer.Text += "clicked";
+	}
 }
