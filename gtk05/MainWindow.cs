@@ -16,21 +16,21 @@ public partial class MainWindow: Gtk.Window
 
 	protected void OnButton2Clicked (object sender, EventArgs e)
 	{
-		textview.Buffer.Text += "clicked\n";
+		//textview.Buffer.Text += "сохраняем...\n";
 	}
 	public void TreeBuild()
 	{
-		textview.Buffer.Text = "Let's make our tree\n";
+		//textview.Buffer.Text = "Загрузили список задач\n";
 	
 		Gtk.TreeViewColumn artistColumn = new Gtk.TreeViewColumn ();
-		artistColumn.Title = "Artist";
+		artistColumn.Title = "Task description";
 
 		Gtk.CellRendererText artistNameCell = new Gtk.CellRendererText ();
 
 		artistColumn.PackStart (artistNameCell, true);
 
 		Gtk.TreeViewColumn songColumn = new Gtk.TreeViewColumn ();
-		songColumn.Title = "Song Title";
+		songColumn.Title = "заметки";
 
 		Gtk.CellRendererText songTitleCell = new Gtk.CellRendererText ();
 		songColumn.PackStart (songTitleCell, true);
@@ -43,11 +43,14 @@ public partial class MainWindow: Gtk.Window
 
 		Gtk.TreeStore musicListStore = new Gtk.TreeStore (typeof (string), typeof (string));
 
-		Gtk.TreeIter iter = musicListStore.AppendValues ("Dance");
-		musicListStore.AppendValues (iter, "Fannypack", "Nu Nu (Yeah Yeah) (double j and haze radio edit)");
+		Gtk.TreeIter iter = musicListStore.AppendValues ("Binary studio task");
+		musicListStore.AppendValues (iter, "поставить нужно ПО", "");
+		musicListStore.AppendValues (iter, "прочитать книжку", "");
 
-		iter = musicListStore.AppendValues ("Hip-hop");
-		musicListStore.AppendValues (iter, "Nelly", "Country Grammer");
+
+		iter = musicListStore.AppendValues ("Выучить английский");
+		musicListStore.AppendValues (iter, "записаться на курсы", "");
+		musicListStore.AppendValues (iter, "найти с кем пообщатся на английском", "");
 
 		tree.Model = musicListStore;
 	}
