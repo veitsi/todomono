@@ -1,5 +1,6 @@
 using System;
 using Gtk;
+using gtk05;
 
 public partial class MainWindow: Gtk.Window
 {	
@@ -18,40 +19,40 @@ public partial class MainWindow: Gtk.Window
 	{
 		//textview.Buffer.Text += "сохраняем...\n";
 	}
-	public void TreeBuild()
+
+	private void TreeInit ()
+	{
+		Gtk.TreeViewColumn taskColumn = new Gtk.TreeViewColumn ();
+		taskColumn.Title = "Task description";
+		Gtk.CellRendererText taskTextCell = new Gtk.CellRendererText ();
+		taskColumn.PackStart (taskTextCell, true);
+
+		Gtk.TreeViewColumn statusColumn = new Gtk.TreeViewColumn ();
+		statusColumn.Title = "status";
+		Gtk.CellRendererToggle statusCell = new Gtk.CellRendererToggle ();
+		statusColumn.PackStart (statusCell, true);
+
+		tree.AppendColumn (taskColumn);
+		tree.AppendColumn (statusColumn);
+		taskColumn.AddAttribute (taskTextCell, "text", 0);
+		statusColumn.AddAttribute (statusCell, "text", 1);
+	}
+
+	public void TreeBuild (ToDoList todo)
 	{
 		//textview.Buffer.Text = "Загрузили список задач\n";
-	
-		Gtk.TreeViewColumn artistColumn = new Gtk.TreeViewColumn ();
-		artistColumn.Title = "Task description";
+		this.TreeInit ();
 
-		Gtk.CellRendererText artistNameCell = new Gtk.CellRendererText ();
+		Gtk.TreeStore todoListStore = new Gtk.TreeStore (typeof(string), typeof(string));
+		Gtk.TreeIter iter;
+		foreach (Task t in todo.tasks) {
+			iter=todoListStore.AppendValues (t.text);
+			if (t.subs.Count > 0) {
+				foreach (SubTask s in t.subs)
+					todoListStore.AppendValues (iter, s.text, "");
+			}
+		}
 
-		artistColumn.PackStart (artistNameCell, true);
-
-		Gtk.TreeViewColumn songColumn = new Gtk.TreeViewColumn ();
-		songColumn.Title = "заметки";
-
-		Gtk.CellRendererText songTitleCell = new Gtk.CellRendererText ();
-		songColumn.PackStart (songTitleCell, true);
-
-		tree.AppendColumn (artistColumn);
-		tree.AppendColumn (songColumn);
-
-		artistColumn.AddAttribute (artistNameCell, "text", 0);
-		songColumn.AddAttribute (songTitleCell, "text", 1);
-
-		Gtk.TreeStore musicListStore = new Gtk.TreeStore (typeof (string), typeof (string));
-
-		Gtk.TreeIter iter = musicListStore.AppendValues ("Binary studio task");
-		musicListStore.AppendValues (iter, "поставить нужно ПО", "");
-		musicListStore.AppendValues (iter, "прочитать книжку", "");
-
-
-		iter = musicListStore.AppendValues ("Выучить английский");
-		musicListStore.AppendValues (iter, "записаться на курсы", "");
-		musicListStore.AppendValues (iter, "найти с кем пообщатся на английском", "");
-
-		tree.Model = musicListStore;
+		tree.Model = todoListStore;
 	}
 }
